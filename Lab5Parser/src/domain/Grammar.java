@@ -3,7 +3,6 @@ package domain;
 import util.Pair;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Grammar {
@@ -24,7 +23,7 @@ public class Grammar {
     }
 
 
-    public void readFromFile() throws FileNotFoundException {
+    public void readFromFile() throws Exception {
         File file = new File(this.fileName);
         Scanner scanner = new Scanner(file);
 
@@ -32,14 +31,14 @@ public class Grammar {
         String nonTerminalsTxt = scanner.nextLine();
         String setOfNonTerminals = scanner.nextLine();
         this.setOfNonTerminals = Arrays.asList(setOfNonTerminals.split(","));
-        System.out.println(this.setOfNonTerminals);
+        //System.out.println(this.setOfNonTerminals);
 
 
         //Set of terminals
         String terminalsTxt = scanner.nextLine();
         String setOfTerminals = scanner.nextLine();
         this.setOfTerminals = Arrays.asList(setOfTerminals.split(","));
-        System.out.println(this.setOfTerminals);
+        //System.out.println(this.setOfTerminals);
 
 
         //Productions
@@ -52,48 +51,34 @@ public class Grammar {
                 break;
 
             List<String> productions = Arrays.asList(production.split(" -> "));
-            System.out.println("prods" + productions);
-            List<String> states = Arrays.asList(productions.get(1).split(" \\| "));
-            System.out.println("states" + states);
 
-            Pair<String, List<String>> model = new Pair<>(productions.get(0), states);
-            System.out.println(model);
-            this.setOfProductions.put(model.getFirst(), model.getSecond());
+            if (checkCFG(productions.get(0))) {
+                //System.out.println("prods" + productions);
+                List<String> states = Arrays.asList(productions.get(1).split(" \\| "));
+                //System.out.println("states" + states);
+
+                Pair<String, List<String>> model = new Pair<>(productions.get(0), states);
+                //System.out.println(model);
+                this.setOfProductions.put(model.getFirst(), model.getSecond());
+            } else {
+                throw new Exception("The grammar is not CFG!");
+            }
+
 
         }
 
         //Starting symbol
         this.startingSymbol = scanner.nextLine();
-        System.out.println(this.startingSymbol);
+        //System.out.println(this.startingSymbol);
 
         scanner.close();
 
     }
 
-    /*public boolean checkCFG() {
-        *//*return getSetOfNonTerminals().stream()
-                .allMatch(nonterminal -> setOfProductions.get(nonterminal).stream()
-                        .allMatch(prod -> prod.length()==1));*//*
 
-        return getSetOfNonTerminals().stream()
-                .allMatch(nonterminal -> {
-                    List<String> productions = setOfProductions.get(nonterminal);
-                    return productions != null && productions.stream().allMatch(prod -> prod.length() == 1 || prod.equals("ε"));
-                });
-    }*/
-
-    public boolean checkCFG() {
-        return checkProductionRules();
-    }
-
-    private boolean checkProductionRules() {
-        return setOfProductions.keySet().stream()
-                .allMatch(nonterminal -> setOfProductions.get(nonterminal).stream().allMatch(this::isValidProduction));
-    }
-
-    private boolean isValidProduction(String production) {
-        return Arrays.stream(production.split("\\s+"))
-                .allMatch(symbol -> symbol.length() == 1 );
+    public boolean checkCFG(String nonTerms) {
+        String[] extractedNonTerminals = nonTerms.split(",");
+        return extractedNonTerminals.length <= 1;
     }
 
     public List<String> getSetOfNonTerminals() {

@@ -1,0 +1,31 @@
+SET OF NON-TERMINALS
+program, decllist, declaration, listDeclaration, listInt, listString, cmpdstmt, stmtlist, stmt, simplstmt, structstmt, assignstmt, expression, operator, iostmt, ifstmt, ifsimplestmt, ifelsestmt, whilestmt, forstmt, condition
+SET OF TERMINALS
+{, }, ;, [, ], (, ), +, -, *, /, %, read, write, if, else, whileLoop, forLoop, <, <=, ==, !=, >=, >, boolean, char, integer, string, type, identifier, number
+PRODUCTIONS
+program -> { decllist ; cmpdstmt }
+decllist -> declaration | declaration ; decllist
+declaration -> type identifier | type listDeclaration
+type -> boolean | char | integer | string
+listDeclaration -> [ listInt ] | [ listString ]
+listInt -> number , listInt | number
+listString -> string , listString | string
+cmpdstmt -> stmtlist
+stmtlist -> stmt | stmt ; stmtlist
+stmt -> simplstmt | structstmt
+simplstmt -> assignstmt | iostmt
+assignstmt -> identifier = expression
+expression -> expression + term | expression - term | term
+term -> term * factor | term / factor | term % factor | factor
+factor -> ( expression ) | identifier
+operator -> + | - | * | / | %
+iostmt -> read identifier | write identifier
+structstmt -> ifstmt | whilestmt | forstmt
+ifstmt -> ifsimplestmt | ifelsestmt
+ifsimplestmt -> if ( condition ) { stmt }
+ifelsestmt -> if ( condition ) { stmt } else { stmt }
+whilestmt -> whileLoop ( condition ) { stmt }
+forstmt -> forLoop ( assignstmt ; condition ; assignstmt ) { stmt }
+condition -> expression < expression | expression <= expression | expression == expression | expression != expression | expression >= expression | expression > expression
+STARTING SYMBOL
+program

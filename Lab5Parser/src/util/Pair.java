@@ -1,28 +1,24 @@
 package util;
 
-public class Pair<A,B> {
+public class Pair<A, B> {
 
     private final A first;
     private final B second;
 
-    public Pair(A first, B second)
-    {
-        this.first=first;
-        this.second=second;
+    public Pair(A first, B second) {
+        this.first = first;
+        this.second = second;
     }
 
-    public A getFirst()
-    {
+    public A getFirst() {
         return first;
     }
 
-    public B getSecond()
-    {
+    public B getSecond() {
         return second;
     }
 
-    public String toString()
-    {
-        return "(" + first + "," + second +")";
+    public String toString() {
+        return "(" + first + "," + second + ")";
     }
 }

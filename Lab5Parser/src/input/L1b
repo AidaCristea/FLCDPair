@@ -1,0 +1,83 @@
+Lexic:
+
+
+   1. Alphabet:
+        Upper case and lower case letters: (A-Za-z)
+	Underline character: '_'
+        Decimal digits: (0-9)
+
+   2.  Lexic:
+    a. Special Symbols:
+        Operators: + | - | * | / | % | < | <= | >= | != | == | >
+        Separators: [ | ] | { | } | ( | ) | ; | , | space | newline
+
+    b. Reserved Words:
+        list | char | const | do | else | if | int | program | read | whileLoop | forLoop | write
+
+    c. Identifiers:
+        identifier := letter | letter{letter}{digit}
+	letter := "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
+	digit := "0" | "1" | ... | "9"
+	non_zero_digit := "1" | ... | "9"
+
+    d. Constants:
+        1. int - rule:
+	    int := "0" | ["-"] number
+
+        2. Char:
+            char := 'letter' | 'digit'
+
+        3. String:
+            string := "{char}"
+
+	4. Number:
+	    number := non_zero_digit{digit}
+
+	5. Boolean:
+	    boolean := true | false
+
+
+__________________________________________________________________
+
+tokens: "{", "}", ";", "[", "]", "(", ")", ",", "=", "read", "write", "if", "else", "whileLoop", "forLoop", "<", "<=", "==", "!=", ">=", ">", "boolean", "char", "integer", "string"
+
+
+__________________________________________________________________
+
+Syntax:
+
+
+program ::= "{" decllist ";" cmpdstmt "}"
+decllist ::= declaration | declaration ";" decllist
+declaration ::= type identifier | type listDeclaration
+
+type ::= "boolean" | "char" | "integer" | "string"
+
+listDeclaration := listInt | listString
+listInt := "[" number | {number "," number} "]"
+listString := "[" string | {string "," string} "]"
+
+cmpdstmt ::= stmtlist
+
+stmtlist ::= stmt | stmt ";" stmtlist
+stmt ::= simplstmt | structstmt
+simplstmt ::= assignstmt | iostmt
+
+assignstmt ::= identifier "=" expression
+expression ::= identifier | int | char | string | number | "(" expression ")" operator "(" expression ")"    //added operation between contants(int, string, etc) and order of operations (paranteze)
+operator ::= + | - | * | / | %
+
+iostmt ::= "read" identifier | "write" identifier
+
+structstmt ::= ifstmt | whilestmt | forstmt
+
+ifstmt ::=  ifsimplestmt | ifelsestmt
+ifsimplestmt ::= "if" "(" condition ")" "{" stmt "}"
+ifelsestmt ::= "if" "(" condition ")" "{" stmt "}" "else" "{" stmt "}"
+
+whilestmt ::= "whileLoop" "(" condition ")" "{" stmt "}"
+
+forstmt ::= "forLoop" "(" assignstmt ";" condition ";" assignstmt ")" "{" stmt "}"
+
+condition ::= expression relation expression
+relation ::= "<" | "<=" | "==" | "!=" | ">=" | ">"
