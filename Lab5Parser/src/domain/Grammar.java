@@ -9,7 +9,7 @@ public class Grammar {
 
     private List<String> setOfNonTerminals;
     private List<String> setOfTerminals;
-    private HashMap<String, List<String>> setOfProductions;
+    private HashMap<List<String>, List<List<String>>> setOfProductions;
     private String startingSymbol;
     private String fileName;
 
@@ -50,19 +50,16 @@ public class Grammar {
             if (production.equals("STARTING SYMBOL"))
                 break;
 
+
             List<String> productions = Arrays.asList(production.split(" -> "));
-
-            if (checkCFG(productions.get(0))) {
-                //System.out.println("prods" + productions);
-                List<String> states = Arrays.asList(productions.get(1).split(" \\| "));
-                //System.out.println("states" + states);
-
-                Pair<String, List<String>> model = new Pair<>(productions.get(0), states);
-                //System.out.println(model);
-                this.setOfProductions.put(model.getFirst(), model.getSecond());
-            } else {
-                throw new Exception("The grammar is not CFG!");
+            List<String> left = Arrays.asList(productions.get(0).split(" "));
+            List<String> states = Arrays.asList(productions.get(1).split(" \\| "));
+            List<List<String>> right = new ArrayList<>();
+            for (String s : states) {
+                right.add(Arrays.asList(s.split(" ")));
             }
+            Pair<List<String>, List<List<String>>> model = new Pair<>(left, right);
+            this.setOfProductions.put(model.getFirst(), model.getSecond());
 
 
         }
@@ -76,9 +73,15 @@ public class Grammar {
     }
 
 
-    public boolean checkCFG(String nonTerms) {
-        String[] extractedNonTerminals = nonTerms.split(",");
-        return extractedNonTerminals.length <= 1;
+    public boolean checkCFG(List<String> nonTerms) {
+        return nonTerms.size() <= 1;
+    }
+
+    public boolean checkIfGrammarIsCFG() {
+        for (List<String> left : this.setOfProductions.get(0)) {
+            if (!this.checkCFG(left)) return false;
+        }
+        return true;
     }
 
     public List<String> getSetOfNonTerminals() {
@@ -97,16 +100,22 @@ public class Grammar {
         this.setOfTerminals = setOfTerminals;
     }
 
-    public HashMap<String, List<String>> getSetOfProductions() {
+    public HashMap<List<String>, List<List<String>>> getSetOfProductions() {
         return setOfProductions;
     }
 
-    public void setSetOfProductions(HashMap<String, List<String>> setOfProductions) {
+    public void setSetOfProductions(HashMap<List<String>, List<List<String>>> setOfProductions) {
         this.setOfProductions = setOfProductions;
     }
 
-    public List<String> getProductionsForNonTerminal(String nonterminal) {
-        return this.setOfProductions.get(nonterminal);
+    public List<List<String>> getProductionsForNonTerminal(String nonterminal) {
+        for (Map.Entry<List<String>, List<List<String>>> entry : setOfProductions.entrySet()) {
+            List<String> key = entry.getKey();
+            if (key.contains(nonterminal)) {
+                return entry.getValue();
+            }
+        }
+        return null;
     }
 
     public String getStartingSymbol() {

@@ -1,4 +1,5 @@
 import domain.Grammar;
+import domain.RecursiveDescendentParser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,7 +8,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Grammar grammar = new Grammar("D:\\FACULTATE\\Materiale facultate 2023-2024\\LFTC\\Labs\\Lab5\\Lab5Parser\\src\\input\\g1");
+        Grammar grammar = new Grammar("E://GitHub/LFTC_Pair/FLCDPair/Lab5Parser/src/input/g3");
 
         try {
             grammar.readFromFile();
@@ -47,6 +48,18 @@ public class Main {
                         System.out.println(grammar.getProductionsForNonTerminal(non_terminal));
                         System.out.println("\n");
                         break;
+                    case "6":
+                        System.out.println("CFG check: ");
+                        System.out.println(grammar.checkIfGrammarIsCFG());
+                        System.out.println("\n");
+                        break;
+                    case "7":
+                        System.out.println("Enter w= ");
+                        input = new Scanner(System.in);
+                        String w = input.next();
+                        new RecursiveDescendentParser(grammar,w).parse();
+                        System.out.println("\n");
+                        break;
                     case "0":
                         System.exit(0);
                     default:
@@ -66,6 +79,8 @@ public class Main {
         System.out.println("3 - Show productions");
         System.out.println("4 - Show starting symbol");
         System.out.println("5 - Production for given non-terminal");
+        System.out.println("6 - CFG check");
+        System.out.println("7 - RECURSIVE DESCENDENT PARSER");
         System.out.println("0 - Exit \n");
     }
 }
