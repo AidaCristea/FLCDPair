@@ -78,8 +78,10 @@ public class Grammar {
     }
 
     public boolean checkIfGrammarIsCFG() {
-        for (List<String> left : this.setOfProductions.get(0)) {
-            if (!this.checkCFG(left)) return false;
+        for (List<String> key : setOfProductions.keySet()) {
+            if (key.size() != 1) {
+                return false;
+            }
         }
         return true;
     }

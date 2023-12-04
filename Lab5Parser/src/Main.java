@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws IOException {
         Grammar grammar = new Grammar("E://GitHub/LFTC_Pair/FLCDPair/Lab5Parser/src/input/g3");
-
+        String seq_txt = "E://GitHub/LFTC_Pair/FLCDPair/Lab5Parser/src/input/seq_g3.txt";
         try {
             grammar.readFromFile();
 
@@ -54,10 +54,7 @@ public class Main {
                         System.out.println("\n");
                         break;
                     case "7":
-                        System.out.println("Enter w= ");
-                        input = new Scanner(System.in);
-                        String w = input.next();
-                        new RecursiveDescendentParser(grammar,w).parse();
+                        new RecursiveDescendentParser(grammar,seq_txt).parse();
                         System.out.println("\n");
                         break;
                     case "0":

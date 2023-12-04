@@ -11,6 +11,9 @@ public class Table {
         table.add(row);
     }
 
+    public List<TableRow> getTable() {
+        return table;
+    }
 
     @Override
     public String toString() {

@@ -4,6 +4,7 @@ public class TableRow {
     private Integer index;
     private String info;
     private Integer parent;
+    //sibling
     private Integer rightParent;
 
     public TableRow(Integer index, String info, Integer parent, Integer rightParent) {
