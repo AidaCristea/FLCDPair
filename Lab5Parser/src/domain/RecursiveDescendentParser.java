@@ -1,6 +1,7 @@
 package domain;
 
 import domain.Table.Table;
+import util.Pair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,6 +27,7 @@ public class RecursiveDescendentParser {
         this.beta = new ArrayList<>();
         this.w = new ArrayList<>();
         this.grammar = grammar;
+        this.table = new Table();
 
         //INITIALIZATION
         this.beta.add(grammar.getStartingSymbol());
@@ -86,7 +88,6 @@ public class RecursiveDescendentParser {
                             MomentaryInsuccess();
                         }
                     }
-
                 }
             } else {
                 if (this.s.equals("b")) {
@@ -106,30 +107,122 @@ public class RecursiveDescendentParser {
             System.out.println("ERROR");
 
         } else {
+            System.out.println(Configuration());
             System.out.println("Sequence accepted");
             generateTable();
-            System.out.println(Configuration());
+            System.out.println(table.toString());
             //System.out.println(BuildStringOfProd());
         }
     }
 
     //Generate table
     private Table generateTable() {
+        //TODO: treat case when in the extended production there are no more nonterminals
+
+        //S1, S2, S3, S3
         List<String> productionNumbers = this.filterTerminals(alpha);
-        String initialState=grammar.getStartingSymbol();
+        System.out.println(productionNumbers);
+        String initialState = grammar.getStartingSymbol();
+        table.add(initialState, 0, 0);
+
+        //this is so we know which nonTerminal we need to extend
+        List<Pair<Integer, String>> nonTermsInSeq = new ArrayList<>();
+
+        int startingSymbolIndex = 0;
+        int numberOfCurrentProductionNumber = 0;
+
+        int parentIndex = 0;
+
+
         //productions strings
         for (String productionNumber : productionNumbers) {
-            String nonTerminal = productionNumber.substring(0, productionNumber.length() - 1);
-            Integer index = Integer.parseInt(productionNumber.substring(productionNumber.length() - 1));
+            numberOfCurrentProductionNumber++;
+            String[] parts = separateStringAndNumber(productionNumber);
+            String nonTerminal = parts[0];
+            Integer index = Integer.parseInt(parts[1]);
             System.out.println(nonTerminal + ", " + index);
-            List<String> production=grammar.getProductionsForNonTerminal(nonTerminal).get(index);
-            
+
+            List<String> production = grammar.getProductionsForNonTerminal(nonTerminal).get(index - 1);
+            int i = 0;
+            boolean enteredIf = false;
+            for (String element : production) {
+                System.out.println(element);
+                //if i=0 this mean that this is the first element that we add from that production, so it will not have a left sibling
+                if (i == 0) {
+                    table.add(element, startingSymbolIndex, i);
+                } else {
+                    //we already added an element from the production, so we have a left sibling
+                    table.add(element, startingSymbolIndex, table.getCurrentIdx() - 1);
+                }
+
+                if (grammar.getSetOfNonTerminals().contains(element)) {
+
+                    //save the next parent that needs to be expanded
+                    if (!enteredIf) {
+                        parentIndex = table.getCurrentIdx() - 1;
+                        enteredIf = true;
+                    }
+                    nonTermsInSeq.add(new Pair<>(table.getCurrentIdx() - 1, element));
+                }
+                i++;
+            }
+
+            if (numberOfCurrentProductionNumber == productionNumbers.size() - 1) {
+                startingSymbolIndex = nonTermsInSeq.get(0).getFirst();
+            } else {
+                startingSymbolIndex = parentIndex;
+            }
+
+            System.out.println("Parent " + startingSymbolIndex);
+            System.out.println(nonTermsInSeq);
+
+            System.out.println(table.toString());
+
+            //remove the pair from the list of pairs, because we are going to expand the nonterminal with that index
+            if (nonTermsInSeq.size() > 0) {
+                for (int p = 0; p < nonTermsInSeq.size(); p++) {
+                    if (nonTermsInSeq.get(p).getFirst().equals(startingSymbolIndex)) {
+                        System.out.println("in startsymb match first");
+                        System.out.println(nonTermsInSeq);
+                        nonTermsInSeq.remove(p);
+                    }
+                }
+            }
+            System.out.println("After if pairs");
+
+            System.out.println(startingSymbolIndex);
+            System.out.println(nonTermsInSeq);
+            System.out.println();
+
         }
+        //System.out.println(table.toString());
+
         return table;
     }
 
+
+    private static String[] separateStringAndNumber(String input) {
+        // Define a pattern to match the string and number parts
+        Pattern pattern = Pattern.compile("([a-zA-Z]+)(\\d+)");
+        Matcher matcher = pattern.matcher(input);
+
+        // Check if the pattern matches
+        if (matcher.matches()) {
+            // Group 1 represents the string part, and Group 2 represents the number part
+            String stringPart = matcher.group(1);
+            String numberPart = matcher.group(2);
+
+            return new String[]{stringPart, numberPart};
+        } else {
+            // Handle the case when the input doesn't match the pattern
+            throw new IllegalArgumentException("Input does not match the expected pattern.");
+        }
+    }
+
+
     private List<String> filterTerminals(List<String> workingStack) {
         List<String> filteredWorkingStack = new ArrayList<>();
+        //pattern for sequence of digits at the end of a string
         Pattern pattern = Pattern.compile("\\d+$");
 
         for (String s : workingStack) {
@@ -138,6 +231,7 @@ public class RecursiveDescendentParser {
                 filteredWorkingStack.add(s);
             }
         }
+        //System.out.println(filteredWorkingStack);
         return filteredWorkingStack;
     }
 

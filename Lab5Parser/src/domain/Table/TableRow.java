@@ -5,13 +5,13 @@ public class TableRow {
     private String info;
     private Integer parent;
     //sibling
-    private Integer rightParent;
+    private Integer leftSibling;
 
-    public TableRow(Integer index, String info, Integer parent, Integer rightParent) {
+    public TableRow(Integer index, String info, Integer parent, Integer leftSibling) {
         this.index = index;
         this.info = info;
         this.parent = parent;
-        this.rightParent = rightParent;
+        this.leftSibling = leftSibling;
     }
 
     @Override
@@ -20,7 +20,39 @@ public class TableRow {
                 "index=" + index +
                 ", info='" + info + '\'' +
                 ", parent=" + parent +
-                ", rightParent=" + rightParent +
+                ", leftSibling=" + leftSibling +
                 '}';
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public Integer getParent() {
+        return parent;
+    }
+
+    public void setParent(Integer parent) {
+        this.parent = parent;
+    }
+
+    public Integer getLeftSibling() {
+        return leftSibling;
+    }
+
+    public void setLeftSibling(Integer leftSibling) {
+        this.leftSibling = leftSibling;
     }
 }

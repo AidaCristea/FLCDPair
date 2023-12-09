@@ -80,9 +80,20 @@ public class Grammar {
     public boolean checkIfGrammarIsCFG() {
         for (List<String> key : setOfProductions.keySet()) {
             if (key.size() != 1) {
+                System.out.println("in check size not 1");
                 return false;
             }
+            else {
+                if(!setOfNonTerminals.contains(key.get(0)))
+                {
+                    System.out.println(setOfNonTerminals);
+                    System.out.println(key);
+                    return false;
+                }
+
+            }
         }
+
         return true;
     }
 

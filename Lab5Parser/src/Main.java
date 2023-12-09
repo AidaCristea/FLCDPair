@@ -1,5 +1,6 @@
 import domain.Grammar;
 import domain.RecursiveDescendentParser;
+import domain.Table.Table;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,8 +9,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Grammar grammar = new Grammar("E://GitHub/LFTC_Pair/FLCDPair/Lab5Parser/src/input/g3");
-        String seq_txt = "E://GitHub/LFTC_Pair/FLCDPair/Lab5Parser/src/input/seq_g3.txt";
+        Grammar grammar = new Grammar("D:\\FACULTATE\\Materiale facultate 2023-2024\\LFTC\\Labs\\Lab5\\FLCDPair\\FLCDPair\\Lab5Parser\\src\\input\\g3");
+        String seq_txt = "D:\\FACULTATE\\Materiale facultate 2023-2024\\LFTC\\Labs\\Lab5\\FLCDPair\\FLCDPair\\Lab5Parser\\src\\input\\seq_g3.txt";
         try {
             grammar.readFromFile();
 
@@ -67,6 +68,7 @@ public class Main {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+
     }
 
 

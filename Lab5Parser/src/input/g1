@@ -3,8 +3,8 @@ S,A,B
 SET OF TERMINALS
 a,b
 PRODUCTIONS
-S A -> a A
-A -> a A | b B | b
+S -> a A
+A S -> a A | b B | b
 B -> b B | b
 STARTING SYMBOL
 S
