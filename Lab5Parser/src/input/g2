@@ -1,10 +1,10 @@
 SET OF NON-TERMINALS
 program,decllist,declaration,listDeclaration,listInt,listString,cmpdstmt,stmtlist,stmt,simplstmt,structstmt,assignstmt,expression,operator,iostmt,ifstmt,ifsimplestmt,ifelsestmt,whilestmt,forstmt,condition,type,term,factor
 SET OF TERMINALS
-{, }, ;, [, ], (, ), +, -, *, /, %, read, write, if, else, whileLoop, forLoop, <, <=, ==, !=, >=, >, boolean, char, int, string, identifier, constant, ,
+{, }, ;, [, ], (, ), +, -, *, /, %, read, write, if, else, whileLoop, forLoop, <, <=, ==, !=, >=, >, =, boolean, char, int, string, identifier, constant, ,
 PRODUCTIONS
-program -> decllist ; cmpdstmt ;
-decllist -> declaration | declaration ; decllist
+program -> decllist cmpdstmt
+decllist -> declaration | declaration decllist
 declaration -> type identifier | type listDeclaration
 type -> boolean | char | int | string
 listDeclaration -> identifier [ listInt ] | identifier [ listString ]
@@ -25,7 +25,7 @@ ifstmt -> ifsimplestmt | ifelsestmt
 ifsimplestmt -> if ( condition ) { stmt }
 ifelsestmt -> if ( condition ) { stmt } else { stmt }
 whilestmt -> whileLoop ( condition ) { stmt }
-forstmt -> forLoop ( assignstmt ; condition ; assignstmt ) { stmt }
+forstmt -> forLoop ( assignstmt condition assignstmt ) { stmt }
 condition -> expression < expression | expression <= expression | expression == expression | expression != expression | expression >= expression | expression > expression
 STARTING SYMBOL
 program

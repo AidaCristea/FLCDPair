@@ -1,6 +1,5 @@
-int array[1]; int i;
-whileLoop(i + 1 < n + 1)
+int i
+whileLoop(i < n)
 {
-   sum = sum + array[i];
-   i = i + 1;
+   i = i + 1
 }

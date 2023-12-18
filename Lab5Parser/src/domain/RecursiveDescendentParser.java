@@ -19,6 +19,7 @@ public class RecursiveDescendentParser {
     private Grammar grammar;
     private List<String> w;
     private Table table;
+    private boolean printOK;
 
     public RecursiveDescendentParser(Grammar grammar, String seq) {
         this.s = "q";
@@ -28,6 +29,7 @@ public class RecursiveDescendentParser {
         this.w = new ArrayList<>();
         this.grammar = grammar;
         this.table = new Table();
+        this.printOK = false;
 
         //INITIALIZATION
         this.beta.add(grammar.getStartingSymbol());
@@ -71,7 +73,14 @@ public class RecursiveDescendentParser {
     public void parse() throws InterruptedException {
         while (!s.equals("f") && !s.equals("e")) {
             Thread.sleep(10);
+            /*if (CurrentOfW().trim() == "whileLoop") {
+                this.printOK = true;
+            }
+            if (printOK) {
+                System.out.println(Configuration());
+            }*/
             System.out.println(Configuration());
+
             if (s.equals("q")) {
                 if (i == w.size() + 1 && this.beta.isEmpty()) {
                     System.out.println("SUCCESS");
@@ -100,7 +109,6 @@ public class RecursiveDescendentParser {
             } else {
                 if (this.s.equals("b")) {
                     //BACK when head of working stack (alpha) is a terminal
-                    System.out.println("HEAD OF ALPHA " + HeadOfAlpha());
                     if (grammar.getSetOfTerminals().contains(TailOfAlpha())) {
                         System.out.println("BACK");
                         Back();
@@ -335,12 +343,13 @@ public class RecursiveDescendentParser {
     private void AnotherTry() {
 
         String tailOfAlphaWithoutIndex = TailOfAlpha().substring(0, TailOfAlpha().length() - 1);
-        System.out.println(tailOfAlphaWithoutIndex);
+        //System.out.println(tailOfAlphaWithoutIndex);
         List<List<String>> productions = grammar.getProductionsForNonTerminal(tailOfAlphaWithoutIndex);
         String headOfAlpha = this.HeadOfAlpha();
-        System.out.println(headOfAlpha);
-        System.out.println(TailOfAlpha());
-        System.out.println(TailOfAlpha().substring(TailOfAlpha().length() - 1));
+        //System.out.println(headOfAlpha);
+        //System.out.println(TailOfAlpha());
+        //
+        //System.out.println(TailOfAlpha().substring(TailOfAlpha().length() - 1));
         Integer currentProductionIndex = Integer.parseInt(TailOfAlpha().substring(TailOfAlpha().length() - 1));
         Integer nextProdIndex = currentProductionIndex + 1;
         if (nextProdIndex <= productions.size()) {
@@ -356,13 +365,13 @@ public class RecursiveDescendentParser {
             this.alpha.add(newTailOfAlpha);
 
             for (int i = 0; i < productions.get(currentProductionIndex - 1).size(); i++) {
-                System.out.println("TO REMOVE : " + this.beta.get(0));
+                //System.out.println("TO REMOVE : " + this.beta.get(0));
                 this.beta.remove(0);
             }
 
             List<String> nextProduction = productions.get(nextProdIndex - 1);
             for (int i = nextProduction.size() - 1; i >= 0; i--) {
-                System.out.println("ADD");
+                //System.out.println("ADD");
                 this.beta.add(0, nextProduction.get(i));
             }
         } else {
