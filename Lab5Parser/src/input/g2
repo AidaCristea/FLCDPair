@@ -1,23 +1,23 @@
 SET OF NON-TERMINALS
-program, decllist, declaration, listDeclaration, listInt, listString, cmpdstmt, stmtlist, stmt, simplstmt, structstmt, assignstmt, expression, operator, iostmt, ifstmt, ifsimplestmt, ifelsestmt, whilestmt, forstmt, condition
+program,decllist,declaration,listDeclaration,listInt,listString,cmpdstmt,stmtlist,stmt,simplstmt,structstmt,assignstmt,expression,operator,iostmt,ifstmt,ifsimplestmt,ifelsestmt,whilestmt,forstmt,condition,type,term,factor
 SET OF TERMINALS
-{, }, ;, [, ], (, ), +, -, *, /, %, read, write, if, else, whileLoop, forLoop, <, <=, ==, !=, >=, >, boolean, char, integer, string, type, identifier, number
+{, }, ;, [, ], (, ), +, -, *, /, %, read, write, if, else, whileLoop, forLoop, <, <=, ==, !=, >=, >, boolean, char, int, string, identifier, constant, ,
 PRODUCTIONS
-program -> { decllist ; cmpdstmt }
+program -> decllist ; cmpdstmt ;
 decllist -> declaration | declaration ; decllist
 declaration -> type identifier | type listDeclaration
-type -> boolean | char | integer | string
-listDeclaration -> [ listInt ] | [ listString ]
-listInt -> number , listInt | number
-listString -> string , listString | string
+type -> boolean | char | int | string
+listDeclaration -> identifier [ listInt ] | identifier [ listString ]
+listInt -> constant , listInt | constant
+listString -> constant , listString | constant
 cmpdstmt -> stmtlist
 stmtlist -> stmt | stmt ; stmtlist
 stmt -> simplstmt | structstmt
 simplstmt -> assignstmt | iostmt
 assignstmt -> identifier = expression
-expression -> expression + term | expression - term | term
-term -> term * factor | term / factor | term % factor | factor
-factor -> ( expression ) | identifier
+expression -> term + expression | term - expression | term
+term -> factor + term | factor * term | factor / term | factor % term | factor
+factor -> ( expression ) | identifier | constant
 operator -> + | - | * | / | %
 iostmt -> read identifier | write identifier
 structstmt -> ifstmt | whilestmt | forstmt

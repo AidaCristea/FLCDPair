@@ -1,0 +1,1 @@
+int identifier [ constant , constant , constant , constant , constant ] , identifier = constant , identifier = constant , identifier = constant ; whileLoop ( identifier < identifier ) { identifier = identifier + identifier [ identifier ] ; identifier = identifier + constant ; } double identifier = identifier / identifier ; write identifier ; write constant ; 

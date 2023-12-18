@@ -1,0 +1,1 @@
+int identifier [ constant ] ; int identifier ; whileLoop ( identifier + constant < identifier + constant ) { identifier = identifier + identifier [ identifier ] ; identifier = identifier + constant ; } 

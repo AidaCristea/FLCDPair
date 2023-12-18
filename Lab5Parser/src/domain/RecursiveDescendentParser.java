@@ -31,42 +31,46 @@ public class RecursiveDescendentParser {
 
         //INITIALIZATION
         this.beta.add(grammar.getStartingSymbol());
-        String w = ReadSeq(seq);
-        for (int i = 0; i < w.length(); i++) {
+        //String w = ReadSeq(seq);
+        this.w = ReadSeq(seq);
+
+        System.out.println(this.w.toString());
+
+        /*for (int i = 0; i < w.length(); i++) {
             String s = w.substring(i, i + 1);
             this.w.add(s);
-        }
+        }*/
     }
 
-    public String ReadSeq(String seq) {
+    public List<String> ReadSeq(String seq) {
+        List<String> elements = new ArrayList<>();
+
         try {
             // Create a Scanner to read from the file
-            String filePath;
             Scanner fileScanner = new Scanner(new File(seq));
 
-            String w = "";
-            // Read the value of w from the file
-            if (fileScanner.hasNext()) {
-                w += fileScanner.next();
-            } else {
-                System.out.println("File is empty.");
+            // Read every element from the file, splitting by a space
+            while (fileScanner.hasNext()) {
+                String element = fileScanner.next();
+                elements.add(element);
             }
+
             // Close the file scanner
             fileScanner.close();
-            return w;
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + e.getMessage());
-            return "";
-
         }
+
+        return elements;
     }
 
     public String Configuration() {
         return "(" + s + "," + i.toString() + "," + alpha.toString() + "," + beta.toString() + ")\n";
     }
 
-    public void parse() {
+    public void parse() throws InterruptedException {
         while (!s.equals("f") && !s.equals("e")) {
+            Thread.sleep(10);
             System.out.println(Configuration());
             if (s.equals("q")) {
                 if (i == w.size() + 1 && this.beta.isEmpty()) {
@@ -74,12 +78,16 @@ public class RecursiveDescendentParser {
                     this.Success();
                 } else {
                     //EXPAND when head of input stack (Beta) is nonterminal
+                    System.out.println(HeadOfBeta());
                     if (grammar.getSetOfNonTerminals().contains(HeadOfBeta())) {
                         System.out.println("EXPAND");
                         this.Expand();
                     } else {
                         //ADVANCE when head of input stack (Beta) is a terminal=current symbol from input
                         //else MOMENTARY INSUCCESS
+                        System.out.println("currentW: " + CurrentOfW());
+
+                        System.out.println(grammar.getSetOfTerminals().contains(HeadOfBeta()));
                         if (grammar.getSetOfTerminals().contains(HeadOfBeta()) && HeadOfBeta().equals(CurrentOfW())) {
                             System.out.println("ADVANCE");
                             Advance();
@@ -117,7 +125,6 @@ public class RecursiveDescendentParser {
 
     //Generate table
     private Table generateTable() {
-        //TODO: treat case when in the extended production there are no more nonterminals
 
         //S1, S2, S3, S3
         List<String> productionNumbers = this.filterTerminals(alpha);
@@ -279,6 +286,15 @@ public class RecursiveDescendentParser {
     private void Back() {
         this.i -= 1;
         String lastFromAlpha = TailOfAlpha();
+        /*String tailOfAlphaWithoutIndex = TailOfAlpha().substring(0, TailOfAlpha().length() - 1);
+
+        Integer currentProductionIndex = Integer.parseInt(TailOfAlpha().substring(TailOfAlpha().length() - 1));
+
+
+        for(int j =0;j<grammar.getProductionsForNonTerminal(tailOfAlphaWithoutIndex).get(currentProductionIndex).size();j++)
+        {
+            RemoveTailOfAlpha();
+        }*/
         RemoveTailOfAlpha();
         AddHeadOfBeta(lastFromAlpha);
     }
@@ -319,17 +335,28 @@ public class RecursiveDescendentParser {
     private void AnotherTry() {
 
         String tailOfAlphaWithoutIndex = TailOfAlpha().substring(0, TailOfAlpha().length() - 1);
+        System.out.println(tailOfAlphaWithoutIndex);
         List<List<String>> productions = grammar.getProductionsForNonTerminal(tailOfAlphaWithoutIndex);
         String headOfAlpha = this.HeadOfAlpha();
-        Integer currentProductionIndex = Integer.parseInt(TailOfAlpha().substring(headOfAlpha.length() - 1));
+        System.out.println(headOfAlpha);
+        System.out.println(TailOfAlpha());
+        System.out.println(TailOfAlpha().substring(TailOfAlpha().length() - 1));
+        Integer currentProductionIndex = Integer.parseInt(TailOfAlpha().substring(TailOfAlpha().length() - 1));
         Integer nextProdIndex = currentProductionIndex + 1;
         if (nextProdIndex <= productions.size()) {
             this.s = "q";
+            /*for(int j =0;j<grammar.getProductionsForNonTerminal(tailOfAlphaWithoutIndex).get(currentProductionIndex).size();j++)
+            {
+                RemoveTailOfAlpha();
+            }*/
+
+
             RemoveTailOfAlpha();
             String newTailOfAlpha = tailOfAlphaWithoutIndex + nextProdIndex;
             this.alpha.add(newTailOfAlpha);
 
             for (int i = 0; i < productions.get(currentProductionIndex - 1).size(); i++) {
+                System.out.println("TO REMOVE : " + this.beta.get(0));
                 this.beta.remove(0);
             }
 
@@ -342,7 +369,12 @@ public class RecursiveDescendentParser {
             //s1 -> s
             //listOfInteger1-> listOfInteger
             RemoveTailOfAlpha();
-            RemoveHeadOfBeta();
+
+            for (int i = 0; i < productions.get(currentProductionIndex - 1).size(); i++) {
+                RemoveHeadOfBeta();
+            }
+
+            //RemoveHeadOfBeta();
             AddHeadOfBeta(tailOfAlphaWithoutIndex);
         }
     }

@@ -1,0 +1,6 @@
+int array[1]; int i;
+whileLoop(i + 1 < n + 1)
+{
+   sum = sum + array[i];
+   i = i + 1;
+}

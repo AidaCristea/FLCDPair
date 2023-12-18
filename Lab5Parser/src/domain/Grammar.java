@@ -37,7 +37,7 @@ public class Grammar {
         //Set of terminals
         String terminalsTxt = scanner.nextLine();
         String setOfTerminals = scanner.nextLine();
-        this.setOfTerminals = Arrays.asList(setOfTerminals.split(","));
+        this.setOfTerminals = Arrays.asList(setOfTerminals.split(", "));
         //System.out.println(this.setOfTerminals);
 
 

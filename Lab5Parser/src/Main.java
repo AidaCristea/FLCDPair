@@ -1,6 +1,8 @@
 import domain.Grammar;
 import domain.RecursiveDescendentParser;
 import domain.Table.Table;
+import scanner.PIF;
+import util.FileCleaner;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,8 +10,54 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        Grammar grammar = new Grammar("D:\\FACULTATE\\Materiale facultate 2023-2024\\LFTC\\Labs\\Lab5\\FLCDPair\\FLCDPair\\Lab5Parser\\src\\input\\g3");
+    public static void main(String[] args) throws Exception {
+        FileCleaner fileCleaner = new FileCleaner();
+        fileCleaner.cleaner("PIF1.out");
+        fileCleaner.cleaner("PIFSeq.out");
+
+
+        PIF pif = new PIF();
+        pif.readProblem("p1.txt", "PIF1.out", "ST1.out");
+        System.out.println();
+        String seq =pif.sequence("PIF1.out", "PIFSeq.out");
+        //System.out.println(seq);
+
+
+
+        Grammar grammar = new Grammar("D:\\FACULTATE\\Materiale facultate 2023-2024\\LFTC\\Labs\\Lab5\\FLCDPair\\FLCDPair\\Lab5Parser\\src\\input\\g2");
+        grammar.readFromFile();
+        System.out.println("Terminals: ");
+        System.out.println(grammar.getSetOfTerminals());
+        System.out.println("\n");
+
+        System.out.println("Non-terminals: ");
+        System.out.println(grammar.getSetOfNonTerminals());
+        System.out.println("\n");
+
+        //String seq_txt = "D:\\FACULTATE\\Materiale facultate 2023-2024\\LFTC\\Labs\\Lab5\\FLCDPair\\FLCDPair\\Lab5Parser\\src\\input\\seq_g3.txt";
+
+        System.out.println("Starting symbol: ");
+        System.out.println(grammar.getStartingSymbol());
+        System.out.println("\n");
+
+        new RecursiveDescendentParser(grammar,"PIFSeq.out").parse();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*Grammar grammar = new Grammar("D:\\FACULTATE\\Materiale facultate 2023-2024\\LFTC\\Labs\\Lab5\\FLCDPair\\FLCDPair\\Lab5Parser\\src\\input\\g3");
         String seq_txt = "D:\\FACULTATE\\Materiale facultate 2023-2024\\LFTC\\Labs\\Lab5\\FLCDPair\\FLCDPair\\Lab5Parser\\src\\input\\seq_g3.txt";
         try {
             grammar.readFromFile();
@@ -67,7 +115,7 @@ public class Main {
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-        }
+        }*/
 
     }
 
