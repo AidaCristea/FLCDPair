@@ -23,9 +23,9 @@ iostmt -> read identifier | write identifier
 structstmt -> ifstmt | whilestmt | forstmt
 ifstmt -> ifsimplestmt | ifelsestmt
 ifsimplestmt -> if ( condition ) { stmt }
-ifelsestmt -> if ( condition ) { stmt } else { stmt }
-whilestmt -> whileLoop ( condition ) { stmt }
-forstmt -> forLoop ( assignstmt condition assignstmt ) { stmt }
+ifelsestmt -> if ( condition ) { stmtlist } else { stmtlist }
+whilestmt -> whileLoop ( condition ) { stmtlist }
+forstmt -> forLoop ( assignstmt condition assignstmt ) { stmtlist }
 condition -> expression < expression | expression <= expression | expression == expression | expression != expression | expression >= expression | expression > expression
 STARTING SYMBOL
 program
