@@ -14,6 +14,7 @@ public class Main {
         FileCleaner fileCleaner = new FileCleaner();
         fileCleaner.cleaner("PIF1.out");
         fileCleaner.cleaner("PIFSeq.out");
+        fileCleaner.cleaner("ST1.out");
 
 
         PIF pif = new PIF();

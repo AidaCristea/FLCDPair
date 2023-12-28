@@ -1,6 +1,7 @@
-int i
+int i ; int sum ; int average ; int n
 whileLoop(i < n)
 {
-   i = i - 1 ;
-   i = i + 1
-}
+   i = i + 1 ;
+   i = i - 1
+} ;
+average = sum / n
