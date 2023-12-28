@@ -7,7 +7,7 @@ program -> decllist cmpdstmt
 decllist -> declaration ; | declaration ; decllist
 declaration -> type listDeclaration | type identifier
 type -> boolean | char | int | string | double
-listDeclaration -> identifier [ listInt ] | identifier [ listString ]
+listDeclaration -> identifier [ listInt ] | identifier [ listString ] | identifier [ ]
 listInt -> constant , listInt | constant
 listString -> constant , listString | constant
 cmpdstmt -> stmtlist
@@ -19,13 +19,13 @@ expression -> term + expression | term - expression | term
 term -> factor + term | factor * term | factor / term | factor % term | factor
 factor -> ( expression ) | identifier | constant | identifier [ expression ]
 operator -> + | - | * | / | %
-iostmt -> read identifier | write identifier | write constant
+iostmt -> read identifier | write identifier | write constant | read identifier [ expression ]
 structstmt -> ifstmt | whilestmt | forstmt
 ifstmt -> ifsimplestmt | ifelsestmt
-ifsimplestmt -> if ( condition ) { stmt }
+ifsimplestmt -> if ( condition ) { stmtlist }
 ifelsestmt -> if ( condition ) { stmtlist } else { stmtlist }
 whilestmt -> whileLoop ( condition ) { stmtlist }
-forstmt -> forLoop ( assignstmt condition assignstmt ) { stmtlist }
+forstmt -> forLoop ( assignstmt ; condition ; assignstmt ) { stmtlist }
 condition -> expression < expression | expression <= expression | expression == expression | expression != expression | expression >= expression | expression > expression
 STARTING SYMBOL
 program

@@ -12,15 +12,15 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws Exception {
         FileCleaner fileCleaner = new FileCleaner();
-        fileCleaner.cleaner("PIF1.out");
-        fileCleaner.cleaner("PIFSeq.out");
-        fileCleaner.cleaner("ST1.out");
+        fileCleaner.cleaner("PIF3.out");
+        fileCleaner.cleaner("PIF3Seq.out");
+        fileCleaner.cleaner("ST3.out");
 
 
         PIF pif = new PIF();
-        pif.readProblem("p1.txt", "PIF1.out", "ST1.out");
+        pif.readProblem("p3.txt", "PIF3.out", "ST3.out");
         System.out.println();
-        String seq =pif.sequence("PIF1.out", "PIFSeq.out");
+        String seq =pif.sequence("PIF3.out", "PIF3Seq.out");
         //System.out.println(seq);
 
 
@@ -41,7 +41,7 @@ public class Main {
         System.out.println(grammar.getStartingSymbol());
         System.out.println("\n");
 
-        new RecursiveDescendentParser(grammar,"PIFSeq.out").parse();
+        new RecursiveDescendentParser(grammar,"PIF3Seq.out").parse();
 
 
 

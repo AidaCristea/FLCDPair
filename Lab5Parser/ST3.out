@@ -1,0 +1,1 @@
+symbolTbl.SymbolTable  { elements=[[n, i, 2], [sum], [], [array, 0, 5], [1]], size = 5 }
