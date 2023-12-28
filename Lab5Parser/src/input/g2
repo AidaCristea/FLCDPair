@@ -11,7 +11,7 @@ listDeclaration -> identifier [ listInt ] | identifier [ listString ]
 listInt -> constant , listInt | constant
 listString -> constant , listString | constant
 cmpdstmt -> stmtlist
-stmtlist -> stmt ; stmtlist | stmt
+stmtlist -> stmt ; stmtlist | stmt ;
 stmt -> simplstmt | structstmt
 simplstmt -> assignstmt | iostmt
 assignstmt -> identifier = expression
