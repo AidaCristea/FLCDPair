@@ -1,0 +1,10 @@
+int number ; int reverse_number ; int digit ;
+read number ;
+reverse_number = 0 ;
+whileLoop(number != 0)
+{
+  digit = number % 10 ;
+  reverse_number = ( reverse_number * 10 ) + digit ;
+  number = number / 10 ;
+} ;
+write reverse_number ;

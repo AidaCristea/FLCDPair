@@ -1,0 +1,1 @@
+int identifier ; int identifier ; int identifier ; read identifier ; identifier = constant ; whileLoop ( identifier != constant ) { identifier = identifier % constant ; identifier = ( identifier * constant ) + identifier ; identifier = identifier / constant ; } ; write identifier ; 

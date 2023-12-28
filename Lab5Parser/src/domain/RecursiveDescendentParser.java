@@ -72,7 +72,7 @@ public class RecursiveDescendentParser {
 
     public void parse() throws InterruptedException {
         while (!s.equals("f") && !s.equals("e")) {
-            Thread.sleep(10);
+            Thread.sleep(3);
             /*if (CurrentOfW().trim() == "whileLoop") {
                 this.printOK = true;
             }
