@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        FileCleaner fileCleaner = new FileCleaner();
+        /*FileCleaner fileCleaner = new FileCleaner();
         fileCleaner.cleaner("PIF3.out");
         fileCleaner.cleaner("PIF3Seq.out");
         fileCleaner.cleaner("ST3.out");
@@ -21,42 +21,50 @@ public class Main {
         pif.readProblem("p3.txt", "PIF3.out", "ST3.out");
         System.out.println();
         String seq =pif.sequence("PIF3.out", "PIF3Seq.out");
-        //System.out.println(seq);
+        String pifseq = "PIF3Seq.out";
+        //System.out.println(seq);*/
+
+
+        /*FileCleaner fileCleaner2 = new FileCleaner();
+        fileCleaner2.cleaner("PIF1.out");
+        fileCleaner2.cleaner("PIFSeq.out");
+        fileCleaner2.cleaner("ST1.out");
+
+
+        PIF pif1 = new PIF();
+        pif1.readProblem("p1.txt", "PIF1.out", "ST1.out");
+        System.out.println();
+        String seq1 =pif1.sequence("PIF1.out", "PIFSeq.out");
+        String pifseq = "PIFSeq.out";*/
+
+
+        FileCleaner fileCleaner3 = new FileCleaner();
+        fileCleaner3.cleaner("PIF2.out");
+        fileCleaner3.cleaner("PIF2Seq.out");
+        fileCleaner3.cleaner("ST2.out");
+
+
+        PIF pif2 = new PIF();
+        pif2.readProblem("p2.txt", "PIF2.out", "ST2.out");
+        System.out.println();
+        String seq2 =pif2.sequence("PIF2.out", "PIF2Seq.out");
+        String pifseq = "PIF2Seq.out";
 
 
 
         Grammar grammar = new Grammar("D:\\FACULTATE\\Materiale facultate 2023-2024\\LFTC\\Labs\\Lab5\\FLCDPair\\FLCDPair\\Lab5Parser\\src\\input\\g2");
         grammar.readFromFile();
-        System.out.println("Terminals: ");
-        System.out.println(grammar.getSetOfTerminals());
-        System.out.println("\n");
 
-        System.out.println("Non-terminals: ");
-        System.out.println(grammar.getSetOfNonTerminals());
-        System.out.println("\n");
 
+        //new RecursiveDescendentParser(grammar,"PIF3Seq.out").parse();
+
+
+
+
+        //Grammar grammar = new Grammar("D:\\FACULTATE\\Materiale facultate 2023-2024\\LFTC\\Labs\\Lab5\\FLCDPair\\FLCDPair\\Lab5Parser\\src\\input\\g3");
         //String seq_txt = "D:\\FACULTATE\\Materiale facultate 2023-2024\\LFTC\\Labs\\Lab5\\FLCDPair\\FLCDPair\\Lab5Parser\\src\\input\\seq_g3.txt";
 
-        System.out.println("Starting symbol: ");
-        System.out.println(grammar.getStartingSymbol());
-        System.out.println("\n");
 
-        new RecursiveDescendentParser(grammar,"PIF3Seq.out").parse();
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*Grammar grammar = new Grammar("D:\\FACULTATE\\Materiale facultate 2023-2024\\LFTC\\Labs\\Lab5\\FLCDPair\\FLCDPair\\Lab5Parser\\src\\input\\g3");
-        String seq_txt = "D:\\FACULTATE\\Materiale facultate 2023-2024\\LFTC\\Labs\\Lab5\\FLCDPair\\FLCDPair\\Lab5Parser\\src\\input\\seq_g3.txt";
         try {
             grammar.readFromFile();
 
@@ -101,7 +109,7 @@ public class Main {
                         System.out.println("\n");
                         break;
                     case "7":
-                        new RecursiveDescendentParser(grammar,seq_txt).parse();
+                        new RecursiveDescendentParser(grammar,pifseq).parse();
                         System.out.println("\n");
                         break;
                     case "0":
@@ -113,7 +121,7 @@ public class Main {
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-        }*/
+        }
 
     }
 
