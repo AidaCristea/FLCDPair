@@ -10,6 +10,7 @@ identifier = (1,1)
 ; = -1
 int = -1
 identifier = (0,1)
+; = -1
 whileLoop = -1
 ( = -1
 identifier = (0,0)

@@ -1,4 +1,4 @@
-int i ; int sum ; int average ; int n
+int i ; int sum ; int average ; int n ;
 whileLoop(i < n)
 {
    i = i + 1 ;

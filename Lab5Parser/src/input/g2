@@ -4,7 +4,7 @@ SET OF TERMINALS
 {, }, ;, [, ], (, ), +, -, *, /, %, read, write, if, else, whileLoop, forLoop, <, <=, ==, !=, >=, >, =, boolean, char, int, string, identifier, constant, ,
 PRODUCTIONS
 program -> decllist cmpdstmt
-decllist -> declaration | declaration ; decllist
+decllist -> declaration ; | declaration ; decllist
 declaration -> type identifier | type listDeclaration
 type -> boolean | char | int | string
 listDeclaration -> identifier [ listInt ] | identifier [ listString ]
