@@ -1,12 +1,12 @@
 SET OF NON-TERMINALS
 program,decllist,declaration,listDeclaration,listInt,listString,cmpdstmt,stmtlist,stmt,simplstmt,structstmt,assignstmt,expression,operator,iostmt,ifstmt,ifsimplestmt,ifelsestmt,whilestmt,forstmt,condition,type,term,factor
 SET OF TERMINALS
-{, }, ;, [, ], (, ), +, -, *, /, %, read, write, if, else, whileLoop, forLoop, <, <=, ==, !=, >=, >, =, boolean, char, int, string, identifier, constant, ,
+{, }, ;, [, ], (, ), +, -, *, /, %, read, write, if, else, whileLoop, forLoop, <, <=, ==, !=, >=, >, =, boolean, char, int, string, double, identifier, constant, ,
 PRODUCTIONS
 program -> decllist cmpdstmt
 decllist -> declaration ; | declaration ; decllist
-declaration -> type identifier | type listDeclaration
-type -> boolean | char | int | string
+declaration -> type listDeclaration | type identifier
+type -> boolean | char | int | string | double
 listDeclaration -> identifier [ listInt ] | identifier [ listString ]
 listInt -> constant , listInt | constant
 listString -> constant , listString | constant
@@ -17,9 +17,9 @@ simplstmt -> assignstmt | iostmt
 assignstmt -> identifier = expression
 expression -> term + expression | term - expression | term
 term -> factor + term | factor * term | factor / term | factor % term | factor
-factor -> ( expression ) | identifier | constant
+factor -> ( expression ) | identifier | constant | identifier [ expression ]
 operator -> + | - | * | / | %
-iostmt -> read identifier | write identifier
+iostmt -> read identifier | write identifier | write constant
 structstmt -> ifstmt | whilestmt | forstmt
 ifstmt -> ifsimplestmt | ifelsestmt
 ifsimplestmt -> if ( condition ) { stmt }
